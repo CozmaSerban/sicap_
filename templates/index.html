@@ -91,11 +91,11 @@
             <p class="lead">Dureaza pana parseaza toate informatiile.</p>
             <ul class="list-group" id="menu">
             </ul>
-            <div class="d-flex justify-content-center">
-  <div class="spinner-border" role="status">
-    <span class="sr-only">Loading...</span>
-  </div>
-</div>
+            <div class="d-flex justify-content-center" >
+                <div class="spinner-border" id="loading" role="status">
+                  <span class="sr-only"></span>
+                </div>
+              </div>
         </div>
     </main>
 
@@ -112,8 +112,8 @@
     <script src="https://code.jquery.com/jquery-3.6.0.js"
         integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <script>
-
         $(document).ready(function () {
+            $("#loading").show()
             $.ajax('/api',
                 {
                     success: function (data, status, xhr) {   // success callback function
@@ -122,6 +122,7 @@
                             console.log(element);
                             $("#menu").append('<li class="list-group-item list-group-item-info"><b>ID</b> ' + element["noticeNo"] + ' </br> <b>CONTRACT:</b> ' + element["contractTitle"] + ' </br><b>BENEFICIAR</b> ' + element["contractingAuthorityNameAndFN"] + ' </br> <b>VALOARE</b> ' + element["estimatedValueRon"] + ' RON </br> <b>DEADLINE </b>' + element["tenderReceiptDeadlineExport"] + '</br> <b>URL: </b> http://www.e-licitatie.ro/pub/notices/c-notice/v2/view/' + element["cNoticeId"] + ' </li>');
                         });
+                        $("#loading").css('display','none')
 
                     },
                     error: function (jqXhr, textStatus, errorMessage) { // error callback 
@@ -130,14 +131,17 @@
                 });
 
             $("#button").click(function () {
+                $("#loading").show()
+                $("#menu").empty();
                 $.ajax('/api?date='+$("#data").val(),
                     {
                         success: function (data, status, xhr) {   // success callback function
-                            $("#menu").empty();
+                            
                             data["data"].forEach((element) => {
                                 console.log(element);
                                 $("#menu").append('<li class="list-group-item list-group-item-info"><b>ID</b> ' + element["noticeNo"] + ' </br> <b>CONTRACT:</b> ' + element["contractTitle"] + ' </br><b>BENEFICIAR</b> ' + element["contractingAuthorityNameAndFN"] + ' </br> <b>VALOARE</b> ' + element["estimatedValueRon"] + ' RON </br> <b>DEADLINE </b>' + element["tenderReceiptDeadlineExport"] + '</br> <b>URL: </b> http://www.e-licitatie.ro/pub/notices/c-notice/v2/view/' + element["cNoticeId"] + ' </li>');
                             });
+                            $("#loading").css('display','none')
 
                         },
                         error: function (jqXhr, textStatus, errorMessage) { // error callback 
@@ -147,10 +151,6 @@
 
             });
         });
-
-
     </script>
-
 </body>
-
 </html>
