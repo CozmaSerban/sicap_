@@ -48,82 +48,18 @@ def api():
         if "48" in  datum["cpvCodeAndName"][:2] or "32" in  datum["cpvCodeAndName"][:2]:
             if datum not in filtered:
                 filtered.append(datum)
-        else:    
-            url = "http://www.e-licitatie.ro/api-pub/NoticeCommon/GetSection21View/?initNoticeId="+str(datum["cNoticeId"])+"&sysNoticeTypeId=2"
-
-            payload = ""
-            headers = {
-                'Content-Type': 'application/json;charset=UTF-8',
-                'Referer': 'https://e-licitatie.ro/pub/notices/contract-notices/list/0/0',
-                'Cookie': '_HttpSessionID=F3B058C4644345729DC7B372A21639F5'
-                }
-
-            response = requests.request("GET", url, headers=headers, data=payload)
-
-            try:
-                    lista = response.json()["section22"]["supplementaryCpvCode"]
-                    if lista != None:
-                        for elem in lista:
-                            if "48" in  elem[:2]  or "32" in  elem[:2]:
-                                if datum not in filtered:
-                                    filtered.append(datum)
-
-            except Exception as e:
-                    print(e)
 
     for datum in data2["items"]:
         if "48" in  datum["cpvCodeAndName"][:2] or "32" in  datum["cpvCodeAndName"][:2]:
             if datum not in filtered:
                 filtered.append(datum)
-        else:    
-            url = "http://www.e-licitatie.ro/api-pub/NoticeCommon/GetSection21View/?initNoticeId="+str(datum["cNoticeId"])+"&sysNoticeTypeId=2"
-
-            payload = ""
-            headers = {
-                'Content-Type': 'application/json;charset=UTF-8',
-                'Referer': 'https://e-licitatie.ro/pub/notices/contract-notices/list/0/0',
-                'Cookie': '_HttpSessionID=F3B058C4644345729DC7B372A21639F5'
-                }
-
-            response = requests.request("GET", url, headers=headers, data=payload)
-
-            try:
-                    lista = response.json()["section22"]["supplementaryCpvCode"]
-                    if lista != None:
-                        for elem in lista:
-                            if "48" in  elem[:2]  or "32" in  elem[:2]:
-                                if datum not in filtered:
-                                    filtered.append(datum)
-
-            except Exception as e:
-                    print(e)
+        
 
     for datum in data3["items"]:
         if "30" in  datum["cpvCodeAndName"][:2]:
             if datum not in filtered:
                 filtered.append(datum)
-        else:    
-            url = "http://www.e-licitatie.ro/api-pub/NoticeCommon/GetSection21View/?initNoticeId="+str(datum["cNoticeId"])+"&sysNoticeTypeId=2"
-
-            payload = ""
-            headers = {
-                'Content-Type': 'application/json;charset=UTF-8',
-                'Referer': 'https://e-licitatie.ro/pub/notices/contract-notices/list/0/0',
-                'Cookie': '_HttpSessionID=F3B058C4644345729DC7B372A21639F5'
-                }
-
-            response = requests.request("GET", url, headers=headers, data=payload)
-
-            try:
-                    lista = response.json()["section22"]["supplementaryCpvCode"]
-                    if lista != None:
-                        for elem in lista:
-                            if "30" in  elem[:2]:
-                                if datum not in filtered:
-                                    filtered.append(datum)
-
-            except Exception as e:
-                    print(e)
+        
 
     newlist = sorted(filtered, key=lambda d: d['estimatedValueRon'], reverse=True) 
     return {"data": newlist}
